@@ -112,7 +112,7 @@ export interface FormikSharedConfig {
    * Validation function. Must return an error object or promise that 
    * throws an error object where that object keys map to corresponding value.
    */
-  validate?: ((values: any) => void | object | Promise<any>);
+  validate?: ((values: any, props: any) => void | object | Promise<any>);
   /** A Yup Schema */
   validationSchema?: any;
 
@@ -327,7 +327,7 @@ export class Formik<
     }
 
     if (this.props.validate) {
-      const maybePromisedErrors = (this.props.validate as any)(values);
+      const maybePromisedErrors = (this.props.validate as any)(values, this.props);
       if (isPromise(maybePromisedErrors)) {
         (maybePromisedErrors as Promise<any>).then(
           () => {
@@ -447,7 +447,7 @@ Formik cannot determine which value to update. For more info see https://github.
 
     if (this.props.validate) {
       const maybePromisedErrors =
-        (this.props.validate as any)(this.state.values) || {};
+        (this.props.validate as any)(this.state.values, this.props) || {};
       if (isPromise(maybePromisedErrors)) {
         (maybePromisedErrors as Promise<any>).then(
           () => {

@@ -19,7 +19,7 @@ import { hoistNonReactStatics } from './hoistStatics';
  */
 export type InjectedFormikProps<Props, Values> = Props &
   FormikState<Values> &
-  FormikActions<Props> &
+  FormikActions<Values> &
   FormikHandlers &
   FormikComputedProps;
 
